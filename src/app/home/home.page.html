@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Welcome!
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar mode="ios" (ionChange)="setFilteredPhotos(searchTerm)" [placeholder]="'Search by Id or Random ipsum'" [(ngModel)]="searchTerm"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-virtual-scroll [items]="filteredPhotos" aproxItemHeight="70px" #virtualScroll>
+    <ion-item *virtualItem="let photo">
+      <ion-avatar slot="start">
+        <img [src]="photo.url" alt="">
+      </ion-avatar>
+      <ion-label>
+        <p>Id: {{photo.id}}</p>
+        <p>Random Ipsum: {{photo.text}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-virtual-scroll>
+
+</ion-content>
