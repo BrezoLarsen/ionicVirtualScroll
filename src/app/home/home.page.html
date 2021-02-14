@@ -11,16 +11,19 @@
 
 <ion-content>
 
-  <ion-virtual-scroll [items]="filteredPhotos" aproxItemHeight="70px" #virtualScroll>
+  <ion-virtual-scroll [items]="filteredPhotos" aproxItemHeight="450px" #virtualScroll>
     <ion-item *virtualItem="let photo">
-      <ion-avatar slot="start">
+      <ion-card>
+      <!-- <ion-avatar slot="start"> -->
         <img [src]="photo.url" alt="">
-      </ion-avatar>
-      <ion-label>
-        <p>Id: {{photo.id}}</p>
-        <p>Random Ipsum: {{photo.text}}</p>
-      </ion-label>
-    </ion-item>
+      <!-- </ion-avatar> -->
+      <ion-card-content>
+        <ion-card-title>Id: {{photo.id}}</ion-card-title>
+        <ion-card-subtitle>Random Ipsum: {{photo.text}}</ion-card-subtitle>
+      </ion-card-content>
+    </ion-card>
+  </ion-item>
+
   </ion-virtual-scroll>
 
 </ion-content>
