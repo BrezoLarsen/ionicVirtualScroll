@@ -5,10 +5,7 @@
     </ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <div class="c-header">
-      <ion-searchbar mode="ios" (ionChange)="setFilteredPhotos(searchTerm)" [placeholder]="'Search by ipsum'" [(ngModel)]="searchTerm"></ion-searchbar>
-      <ion-searchbar mode="ios" (ionChange)="filterPhotoById(id)" [placeholder]="'Search by ID'" [(ngModel)]="id"></ion-searchbar>
-    </div>
+    <ion-searchbar mode="ios" (ionChange)="setFilteredPhotos(searchTerm)" [placeholder]="'Search by ipsum'" [(ngModel)]="searchTerm"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 

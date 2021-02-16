@@ -72,20 +72,8 @@ export class HomePage {
   setFilteredPhotos(searchTerm) {
     const searchText = searchTerm.toLowerCase();
     this.filteredPhotos = this.photoListFinal.filter(photo => {
-      return photo.text.toLowerCase().indexOf(searchText) > -1;
+      return photo.text.toLowerCase().indexOf(searchText) > -1 || photo.id.toString().indexOf(searchText) > -1;
     });
-  }
-
-  filterPhotoById(id: number) {
-    const photo = this.photoListFinal.find(photo => {
-      return photo.id == id;
-    });
-    this.filteredPhotos = [];
-    console.log(id)
-    console.log(this.filteredPhotos)
-    if(photo !== undefined) {
-      this.filteredPhotos.push(photo);
-    }
   }
 
   private getRandomLipsum() {

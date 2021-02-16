@@ -41,7 +41,7 @@ describe('HomePage', () => {
   it('should return photo', () => {
     const service: PhotoService = TestBed.inject(PhotoService);
     service.getPhotos().subscribe(photo => {
-      component.filterPhotoById(1);
+      component.setFilteredPhotos(1);
       expect(photo.id).toContain(1);
     })
   });
