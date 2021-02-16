@@ -27,9 +27,14 @@
 
 
 ion-item {
-  --min-height: 450px
+  --min-height: 380px
 }
 
-ion-card {
-  --min-height: 450px
+.c-header {
+  display: flex;
+}
+
+.searchbar-input.sc-ion-searchbar-ios {
+  font-size: 14px;
+  padding-inline-end: 10px;
 }

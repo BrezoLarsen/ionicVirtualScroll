@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IPhoto } from '../interfaces/photo';
+import { PhotoService } from '../photo.service';
+import {  takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +11,13 @@ import { IPhoto } from '../interfaces/photo';
 })
 export class HomePage {
 
-  public photoList: IPhoto[] = [];
-  public photo: IPhoto;
+  public photoList: any[] = [];
+  public photoListFinal: IPhoto[] = [];
   public filteredPhotos: IPhoto[] = [];
+  public id: number;
+  public photo: IPhoto;
   public searchTerm = '';
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   private randomLipsums: string[] = [
     "Vestibulum ornare lectus a tincidunt.",
@@ -36,26 +42,50 @@ export class HomePage {
     "Nunc sit amet pulvinar dui.",
   ];
 
-  constructor() {
+  constructor(private photoService: PhotoService) {}
+
+  ngOnInit() {
     this.loadPhotos();
   }
 
   loadPhotos() {
-    for(let i = 0; i < 4000; i++) {
-      this.photoList.push(this.photo = {
-        id: i,
-        url: `https://picsum.photos/id/${Math.round( Math.random() * 80)}/500/500`,
-        text: this.getRandomLipsum()
-      });
-    }
-    this.filteredPhotos = this.photoList;
+    this.photoService.getPhotos().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
+      this.photoList = data;
+      this.setDataInPhotoElement();
+    });
   }
 
-  async setFilteredPhotos(searchTerm) {
+  setDataInPhotoElement() {
+    for(let i = 0; i < 4000; i++) {
+      const photoIndex = `${Math.round( Math.random() * 99)}`;
+      const photoObject = this.photoList[photoIndex];
+      const newphoto: IPhoto = {
+        id: i,
+        url: photoObject.download_url,
+        text: this.getRandomLipsum()
+      }
+      this.photoListFinal.push(newphoto);
+    }
+    this.filteredPhotos = this.photoListFinal;
+  }
+
+  setFilteredPhotos(searchTerm) {
     const searchText = searchTerm.toLowerCase();
-    this.filteredPhotos = await this.photoList.filter(photo => {
-      return photo.text.toLowerCase().indexOf(searchText) > -1 || photo.id.toString().indexOf(searchText) > -1;
+    this.filteredPhotos = this.photoListFinal.filter(photo => {
+      return photo.text.toLowerCase().indexOf(searchText) > -1;
     });
+  }
+
+  filterPhotoById(id: number) {
+    const photo = this.photoListFinal.find(photo => {
+      return photo.id == id;
+    });
+    this.filteredPhotos = [];
+    console.log(id)
+    console.log(this.filteredPhotos)
+    if(photo !== undefined) {
+      this.filteredPhotos.push(photo);
+    }
   }
 
   private getRandomLipsum() {
@@ -65,6 +95,12 @@ export class HomePage {
 
   private getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Unsubscribe from the subject
+    this.destroy$.unsubscribe();
   }
 
 }
