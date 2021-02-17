@@ -33,13 +33,11 @@ describe('HomePage', () => {
   });
 
   it('can test HttpClient.getPhotos', () => {
-    const service: PhotoService = TestBed.inject(PhotoService);
     expect(service.getPhotos).toBeDefined();
   });
 
 
   it('should return photo', () => {
-    const service: PhotoService = TestBed.inject(PhotoService);
     service.getPhotos().subscribe(photo => {
       component.setFilteredPhotos(1);
       expect(photo.id).toContain(1);

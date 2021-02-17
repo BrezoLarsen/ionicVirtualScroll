@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card *ngIf="photo">
   <img [src]="photo.url" alt="{{photo.id}}">
   <ion-card-content>
     <ion-card-title>Id: {{photo.id}}</ion-card-title>

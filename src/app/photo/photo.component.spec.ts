@@ -1,7 +1,14 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { IPhoto } from '../interfaces/photo';
 
 import { PhotoComponent } from './photo.component';
+
+const photoDataMock: IPhoto = {
+  id: 1,
+  url: "URLPHOTO",
+  text: "TEXT PHOTO",
+};
 
 describe('PhotoComponent', () => {
   let component: PhotoComponent;
@@ -15,10 +22,12 @@ describe('PhotoComponent', () => {
 
     fixture = TestBed.createComponent(PhotoComponent);
     component = fixture.componentInstance;
+    component.photo = photoDataMock;
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it('should create my component', () => {
     expect(component).toBeTruthy();
   });
+
 });
